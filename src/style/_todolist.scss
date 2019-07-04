@@ -1,0 +1,29 @@
+@import './../node_modules/vuetify/dist/vuetify.min.css';
+
+/*  ul {
+    list-style: none;
+    padding-left: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  li {
+    //line-height: 10px;
+    border: 1px solid darkgray;
+    padding: 10px;
+    margin: 2px 0;
+    position: relative;
+  }
+  span {
+    position: absolute;
+    right: 10px;
+  }*/
+
+  
+  .done {
+    background-color: rgba(28, 122, 28, 0.5);
+  }
+ 
+  .open {
+    background-color: rgba(240, 83, 21, 0.5);
+  }
