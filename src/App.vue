@@ -17,6 +17,11 @@ import TodoForm from './components/TodoForm';
 
 export default {
   name: 'app',
+  async mounted() {
+    await this.$store.dispatch('loadUsers');
+    await this.$store.dispatch('loadTodos');
+    await this.$store.dispatch('loadStatusTypes');
+  },
   components: {
     TodoList,
     TodoForm

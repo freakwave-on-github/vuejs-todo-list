@@ -5,6 +5,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+//Vuetify
 import Vuetify from 'vuetify';
 Vue.use(Vuetify, {
     iconfont: 'mdi',
@@ -13,6 +14,26 @@ Vue.use(Vuetify, {
     }
 });
 
+//Vuex Store
+import { store } from './store/store'
+
 new Vue({
+  el: '#app',
+  store,
   render: h => h(App),
-}).$mount('#app')
+});
+
+
+/*
+new Vue({
+  router,
+  el: '#app',
+  router,
+  store,
+  i18n,
+  render: h => h(App),
+  mounted() {
+      this.$store.dispatch('kickbuzz/loadLocalStorage');
+      this.$store.dispatch('kickbuzz/networkAccounts');
+  }
+});*/

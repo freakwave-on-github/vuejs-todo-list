@@ -14,8 +14,7 @@
  
   export default {
     async mounted() {
-      const response = await fetch('/todo');
-      this.todos = await response.json();
+      
     },
     components: {
       TodoListItem
@@ -23,18 +22,16 @@
     name: 'TodoList',
     data() {
       return {
-        todos: [],
         searchString: ''
       };
     },
     computed: {
         filteredTodosBySearchString() {
-          let that = this;
-          return that.todos.filter(todoItem => 
-            (todoItem.title.toUpperCase().indexOf(that.searchString.toUpperCase()) !== -1) ||
-            (todoItem.referenceLink.toUpperCase().indexOf(that.searchString.toUpperCase()) !== -1) ||
-            (todoItem.status.toString().toUpperCase().indexOf(that.searchString.toUpperCase()) !== -1) ||
-            (todoItem.description.toUpperCase().indexOf(that.searchString.toUpperCase()) !== -1)
+          return this.$store.getters.todos.filter(todoItem => 
+            (todoItem.title.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
+            (todoItem.referenceLink.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
+            (todoItem.status.toString().toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
+            (todoItem.description.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1)
           );
         }
     }

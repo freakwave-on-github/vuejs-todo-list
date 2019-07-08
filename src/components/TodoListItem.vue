@@ -9,8 +9,8 @@
         <v-toolbar color="accent-4" cards light flat>
             <v-card-title class="title font-weight-regular" v-bind:class="{ done: todo.done, open: !todo.done }">
                 <div>
-                    <span v-if="todo.done" @click="toggleState()">✔</span>
-                    <span v-else @click="toggleState()">✘</span>
+                    <span v-if="todo.statusTypeId">✔</span>
+                    <span v-else>✘</span>
                     {{todo.title}}
                 </div>
             </v-card-title>
@@ -57,16 +57,16 @@
                     </v-flex>
                 </v-layout>
 
-                <!-- Space -->
+                <!-- Status -->
                <v-layout row justify-space-around>
                     <v-flex xs3>
                         <v-card dark color="grey">
-                        <v-card-text>Finished</v-card-text>
+                        <v-card-text>Status</v-card-text>
                         </v-card>
                     </v-flex>
                     <v-flex offset-xs1 xs5>
                         <v-card dark color="green">
-                        <v-card-text>{{todo.status ? 'yes' : 'No'}}</v-card-text>
+                        <v-card-text>{{$store.getters.statusTypes.find(statusType => statusType.id === todo.statusTypeId).displayName}}</v-card-text>
                         </v-card>
                     </v-flex>
                 </v-layout>
@@ -94,7 +94,7 @@
                     </v-flex>
                     <v-flex offset-xs1 xs5>
                         <v-card dark color="green">
-                        <v-card-text>{{users.length === 0 ? 'Loading...': users.find(user => user.id === todo.assigneeId).displayName}}</v-card-text>
+                        <v-card-text>{{$store.getters.users.find(user => user.id === todo.assigneeId).displayName}}</v-card-text>
                         </v-card>
                     </v-flex>
                 </v-layout>
@@ -144,34 +144,22 @@
       return {
         isNotCollapsed: false,
         showEditModal: false,
-        users: [],
         workingTimes : []
       };
     },
     methods: {
-      async toggleState() {
-        let that = this;
-        that.todo.done = !that.todo.done;
-        await fetch(`/todo/${that.todo.id}`, {
-          method: 'PUT', 
-          headers: {'content-type': 'application/json'},
-          body: JSON.stringify(that.todo),
-        });
-        this.todo.done = that.todo.done;
-      },
       async deleteTodo() {
         let that = this;
         await fetch(`/todo/${that.todo.id}`, {
           method: 'DELETE', 
           headers: {'content-type': 'application/json'}
         });
+        await this.$store.dispatch('reloadTodos')
       },
       async lazyLoad() {
         if (this.isNotCollapsed && (!this.workTimes || this.workTimes.length === 0) ) {
             const workTimeResponse = await fetch('/workTime?todoId=' + this.todo.id);
             this.workTimes = await workTimeResponse.json();
-            const usersResponse = await fetch('/user');
-            this.users = await usersResponse.json();
         }
       }
     }

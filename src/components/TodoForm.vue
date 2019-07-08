@@ -6,25 +6,25 @@
                 <div v-else>New ToDo</div>
             </v-card-title>
             <v-spacer></v-spacer>
-            <v-btn v-if="collapsable" icon @click="collapsed = !collapsed; lazyLoad()">
+            <v-btn v-if="collapsable" icon @click="collapsed = !collapsed">
                 <v-icon v-if="collapsed">mdi-chevron-double-right</v-icon>
                 <v-icon v-else>mdi-chevron-double-down</v-icon>
             </v-btn>
         </v-toolbar>
         <v-form v-if="!collapsed" v-model="valid" v-on:submit.prevent>
             <v-card-text>
-                <v-text-field :label="`Title`" box autocomplete="off" :rules="[todoForm.required, todoFormTitleRules.maxLength]" type="text" v-model="todo.title" placeholder="Add your title here" counter maxlength="80"></v-text-field>
+                <v-text-field :label="`Title *`" box autocomplete="off" :rules="[todoForm.required, todoFormTitleRules.maxLength]" required type="text" v-model="todo.title" placeholder="Add your title here" counter maxlength="80"></v-text-field>
                 <v-textarea :label="`Description`" box autocomplete="off" type="text" v-model="todo.description" placeholder="Add your description here"></v-textarea>
-                <v-select v-model="todo.assigneeId" :items="users" item-value="id" item-text="displayName" :rules="[todoForm.required]" label="Assignee"/>
+                <v-select v-model="todo.assigneeId" :items="$store.getters.users" item-value="id" item-text="displayName" :rules="[todoForm.required]" required label="Assignee *"/>
                 <v-text-field :label="`Due Date`" box autocomplete="off" type="text"  :rules="[todoFormDueDateRules.verify]" v-model="todo.dueDate" placeholder="YYYY-MM-DD"></v-text-field>
                 <v-text-field :label="`Reference Link`" box autocomplete="off" type="text" v-model="todo.referenceLink" placeholder="Add your Reference Link"></v-text-field>
                 <v-checkbox v-model="todo.isExternal" :label="`is external ToDo?`"></v-checkbox>
                 <v-checkbox v-if="todo.isExternal" v-model="todo.isBillable" :label="`is billable?`"></v-checkbox>
-                <v-checkbox v-model="todo.status" :label="`is Done?`"></v-checkbox>
+                <v-select v-model="todo.statusTypeId" :items="$store.getters.statusTypes" item-value="id" item-text="displayName" :rules="[todoForm.required]" required label="Status *"/>
             </v-card-text>
             <v-card-actions>
-                <v-btn v-if="this.todoItem" type="submit" large :disabledinactive="!valid" class="mx-0" @click="updateTodo()">update</v-btn>
-                <v-btn v-else               type="submit" large :disabledinactive="!valid" class="mx-0" @click="saveToDo()">create</v-btn>
+                <v-btn v-if="this.todoItem" type="submit" large :disabled="!valid" class="mx-0" @click="updateTodo()">update</v-btn>
+                <v-btn v-else               type="submit" large :disabled="!valid" class="mx-0" @click="saveToDo()">create</v-btn>
             </v-card-actions>
         </v-form>
     </v-card>
@@ -37,7 +37,7 @@
       todo: {
         title: '',
         description: '',
-        status: false,
+        statusTypeId: null,
         referenceLink: '',
         assigneeId: '',
         dueDate: null,
@@ -45,9 +45,7 @@
         isExternal: false,
         isBillable: false
       },
-      users: [],
-      collapsed: false,
-      persisted: false
+      collapsed: false
     }),
     props: {
         todoItem : {}, 
@@ -92,23 +90,36 @@
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(that.todo), 
             });
-            this.persisted = true;
+            await this.$store.dispatch('reloadTodos');
+            this.reset();
+            if (this.collapsable && this.collapsedAtBeginning){
+                this.collapsed = true;
+            }
         }
       },
       async updateTodo() {
         let that = this;
-        await fetch(`/todo/${that.todo.id}`, {
-          method: 'PUT', 
-          headers: {'content-type': 'application/json'},
-          body: JSON.stringify(that.todo),
-        });
-        this.todoItem = this.todo;
+        if (that.valid){
+            await fetch(`/todo/${that.todo.id}`, {
+            method: 'PUT', 
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(that.todo),
+            });
+            await this.$store.dispatch('reloadTodos');
+        }
       },
-      async lazyLoad(){
-          if (!this.collapsed){
-            const response = await fetch('/user');
-            this.users = await response.json();
-          }
+      reset() {
+        this.todo = {
+            title: '',
+            description: '',
+            statusTypeId: null,
+            referenceLink: '',
+            assigneeId: '',
+            dueDate: null,
+            creationDate: new Date().toISOString().split('T')[0],
+            isExternal: false,
+            isBillable: false
+        };
       }
     }
   }

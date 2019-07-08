@@ -3,138 +3,61 @@
     {
       "title": "New Task 123",
       "description": "Crazy new task fro crazy guys zzzfdsfdsfdsfdsfdsfdsfsd",
-      "status": false,
+      "statusTypeId": 2,
       "referenceLink": "https://blabla.info",
       "assigneeId": 1,
       "dueDate": "",
       "isExternal": false,
       "isBillable": false,
-      "id": 3,
-      "done": false
-    },
-    {
-      "title": "bbvvc",
-      "description": "bvcbvcbcv",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 1,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 4,
-      "done": true
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 5,
-      "done": true
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 6,
-      "done": false
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 7,
-      "done": false
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 8
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 9
-    },
-    {
-      "title": "dsdsdsds",
-      "description": "dsdsds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 2,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 10
-    },
-    {
-      "title": "fdsfsdfsd",
-      "description": "fdsfsdfds",
-      "status": false,
-      "referenceLink": "",
-      "assigneeId": 1,
-      "dueDate": null,
-      "creationDate": "2019-07-04",
-      "isExternal": false,
-      "isBillable": false,
-      "id": 11
+      "id": 3
     },
     {
       "title": "dsdsds",
-      "description": "dsds",
-      "status": false,
+      "description": "ds",
+      "statusTypeId": 1,
+      "referenceLink": "",
+      "assigneeId": 1,
+      "dueDate": "",
+      "creationDate": "2019-07-05",
+      "isExternal": false,
+      "isBillable": false,
+      "id": 15
+    },
+    {
+      "title": "Test123",
+      "description": "Crazy description",
+      "statusTypeId": 2,
       "referenceLink": "",
       "assigneeId": 1,
       "dueDate": null,
-      "creationDate": "2019-07-04",
+      "creationDate": "2019-07-08",
       "isExternal": false,
       "isBillable": false,
-      "id": 12
+      "id": 16
     },
     {
-      "title": "Crazy entry",
-      "description": "Crazy test",
-      "status": false,
+      "title": "fdfd",
+      "description": "fdfd",
+      "statusTypeId": 1,
       "referenceLink": "",
-      "assigneeId": 1,
-      "dueDate": "2019-07-09",
-      "creationDate": "2019-07-04",
+      "assigneeId": 2,
+      "dueDate": null,
+      "creationDate": "2019-07-08",
       "isExternal": false,
       "isBillable": false,
-      "id": 13
+      "id": 18
+    },
+    {
+      "title": "dsds",
+      "description": "",
+      "statusTypeId": 2,
+      "referenceLink": "",
+      "assigneeId": 2,
+      "dueDate": null,
+      "creationDate": "2019-07-08",
+      "isExternal": false,
+      "isBillable": false,
+      "id": 19
     }
   ],
   "user": [
@@ -163,6 +86,18 @@
       "from": "2019-06-01T09:05:00",
       "to": "2019-06-01T10:05:00",
       "todoId": 4
+    }
+  ],
+  "statusType": [
+    {
+      "id": 1,
+      "name": "OPEN",
+      "displayName": "Open"
+    },
+    {
+      "id": 2,
+      "name": "DONE",
+      "displayName": "Done"
     }
   ]
 }
