@@ -30,7 +30,7 @@
           return this.$store.getters.todos.filter(todoItem => 
             (todoItem.title.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
             (todoItem.referenceLink.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
-            (todoItem.status.toString().toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
+            (this.$store.getters.statusTypes.find(statusType => statusType.id === todoItem.statusTypeId).displayName.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1) ||
             (todoItem.description.toUpperCase().indexOf(this.searchString.toUpperCase()) !== -1)
           );
         }
