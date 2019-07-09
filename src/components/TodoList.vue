@@ -4,9 +4,9 @@
       <v-toolbar-title>Todo List</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field :label="``" box autocomplete="on" type="text" @change="updateCSVDownload('#csvDataSet', getCSVTodos(true), 'Filtered_CSV_Download_'+ searchString +'_'+ new Date().toISOString()+'.csv')" v-model="searchString" placeholder="Filter..."></v-text-field>
+      <v-btn><a id="csvDataSet" download="" href="#">Export as CSV</a></v-btn>
     </v-toolbar>
     <TodoListItem v-for="todo in filteredTodosBySearchString" v-bind:todo="todo" v-bind:key="todo.id"></TodoListItem>
-    <v-btn><a id="csvDataSet" download="" href="#">Export CSV</a></v-btn>
   </div>
 </template>
  
@@ -43,7 +43,17 @@
           if (filteredTodos.length > 0){
             const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
             const header = Object.keys(filteredTodos[0]);
-            csv = filteredTodos.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+            csv = filteredTodos.map(row => header.map(fieldName => 
+              fieldName === 'statusTypeId' 
+              ?
+                JSON.stringify(this.$store.getters.statusTypes.find(statusType => statusType.id === row[fieldName]).displayName, replacer)
+              :  
+                fieldName === 'assigneeId' 
+                ?
+                  JSON.stringify(this.$store.getters.users.find(user => user.id === row[fieldName]).displayName, replacer)
+                :
+                  JSON.stringify(row[fieldName], replacer)).join(',')
+            );
             csv.unshift(header.join(','));
             csv = csv.join('\r\n');
           }
